@@ -3,7 +3,7 @@
 // Clase Medida
 function Medida (valor, exp, tipo) {
   var valor_ = valor;
-  var exp_ = exp;
+  var exp_ = exp || 0;
   var tipo_ = tipo;
 
   this.get_valor = function() {return valor_;}
@@ -14,6 +14,18 @@ function Medida (valor, exp, tipo) {
   this.set_exp = function(exp) {exp_ = exp;}
   this.set_tipo = function(tipo) {tipo_ = tipo;}
 }
+
+// Muestra el resultado
+Medida.prototype.mostrar_final = function(){
+  var res = "El resultado es: " + this.get_valor() + " " + this.get_tipo();
+  resultado.innerHTML = res;
+}
+
+// Muestra el error
+Medida.prototype.mostrar_error = function(){
+  resultado.innerHTML = "El valor '" + ini_temp + "' no es correcto. Lea las instrucciones.";
+}
+
 
 // Clase Temperatura
 function Temperatura (valor, exp, tipo) {
@@ -38,13 +50,16 @@ function conversor(){
   var valor = ini_temp.match(exp_regular_uno);
 
   var temp = new Temperatura(valor[1],valor[2],valor[3]);
+
   if(temp != null){
 
+    // Pasamos a flotante el valor de la temperatura
     temp.set_valor(parseFloat(temp.get_valor()));
 
     if (temp.get_exp() !== undefined){
-      temp.set_exp(parseInt(temp.get_exp()));
+      temp.set_exp(parseInt(temp.get_exp())); // Pasamos el exponente a numero
 
+      // Calculamos el valor correspondiente de la temperatura sin el exponente
       if (temp.get_exp()<0){
         temp.set_exp(temp.get_exp()*-1);
         var i = 1, div = 10;
@@ -67,23 +82,25 @@ function conversor(){
           div = div * 10;
           i++; // Vemos por cuanto debemos multiplicarlo
         }
-        if(div !== 0) temp.set_valor(temp.get_valor()*div); // Si es distinto de 0 multiplicamos
+
+        if(div !== 10){
+          temp.set_valor(temp.get_valor()*div); // Si es distinto de 0 multiplicamos
+        }
       }
     }
 
+    // Hacemos la conversion
     if(temp.get_tipo() === 'c' || temp.get_tipo() === 'C'){
       // Pasamos de C a F
-      var temp_final = new Temperatura(((temp.get_valor()*9)/5)+32,1,"F");
-      var res = "El resultado es: " + temp_final.get_valor() + " " + temp_final.get_tipo();
+      var temp_final = new Temperatura(((temp.get_valor()*9)/5)+32,0,"F");
     } else {
       // Pasamos de F a C
-      var temp_final = new Temperatura(((temp.get_valor()-32)*5)/9,1,"C");
-      var res = "El resultado es: " + temp_final.get_valor() + " " + temp_final.get_tipo();
+      var temp_final = new Temperatura(((temp.get_valor()-32)*5)/9,0,"C");
     }
 
-    resultado.innerHTML = res;  // Mostramos el resultado en el HTML
+    temp_final.mostrar_final(); // Muestra resultado
 
   } else {
-    resultado.innerHTML = "El valor '" + ini_temp + "' no es correcto. Lea las instrucciones.";
+    temp.mostrar_error();  // Muestra error
   }
 }
