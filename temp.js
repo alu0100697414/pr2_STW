@@ -22,8 +22,8 @@ Medida.prototype.mostrar_final = function(){
 }
 
 // Muestra el error
-Medida.prototype.mostrar_error = function(){
-  resultado.innerHTML = "El valor '" + ini_temp + "' no es correcto. Lea las instrucciones.";
+Medida.prototype.mostrar_error = function(error){
+  resultado.innerHTML = "El valor '" + error + "' no es correcto. Lea las instrucciones.";
 }
 
 
@@ -49,7 +49,9 @@ function conversor(){
   // Filtramos en la variable con la expresion regular.
   var valor = ini_temp.match(exp_regular_uno);
 
-  var temp = new Temperatura(valor[1],valor[2],valor[3]);
+  if(valor !== null){
+    var temp = new Temperatura(valor[1],valor[2],valor[3]);
+  }
 
   if(temp != null){
 
@@ -71,9 +73,7 @@ function conversor(){
 
         if(div !== 0) {
           temp.set_valor(temp.get_valor()/div);
-          alert(temp.get_valor());
         }
-
 
       } else {
         var i = 1, div = 10;
@@ -101,6 +101,7 @@ function conversor(){
     temp_final.mostrar_final(); // Muestra resultado
 
   } else {
-    temp.mostrar_error();  // Muestra error
+    var error = new Temperatura(-1,-1,-1);
+    error.mostrar_error(ini_temp);  // Muestra error
   }
 }

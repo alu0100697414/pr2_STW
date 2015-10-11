@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Mocha</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mocha.css" />
+  </head>
+
+  <body>
+    <div id="mocha"></div>
+
+    <center><input id="insert" type="text" name="ini_temp" value="Ej: 45C"><br><button onclick="conversor()"><b> Enviar </b></button></center>
+    <br>
+    <center><div id="resultado"></div></center>
+
+    <script src="chai.js"></script>
+    <script src="mocha.js"></script>
+    <script src="../temp.js"></script>
+    <script>mocha.setup('tdd');</script>
+    <script src="tests.js"></script>
+
+    <script>
+      mocha.run();
+    </script>
+
+  </body>
+</html>
