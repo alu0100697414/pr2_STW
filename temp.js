@@ -102,7 +102,6 @@ function conversor(){
 
   // Filtramos en la variable con la expresion regular.
   var valor = ini_temp.match(exp_regular_uno);
-  alert(valor);
 
   // Creamos el objetio si este no es nulo
   if(valor !== null){
