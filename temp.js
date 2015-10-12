@@ -81,7 +81,7 @@ Temperatura.prototype.to_f = function(){
   return ((this.get_valor()*9)/5)+32;
 }
 
-// Pasamos C a F
+// Pasamos F a C
 Temperatura.prototype.to_c = function(){
   return ((this.get_valor()-32)*5)/9;
 }
@@ -102,13 +102,11 @@ function conversor(){
 
   // Filtramos en la variable con la expresion regular.
   var valor = ini_temp.match(exp_regular_uno);
+  alert(valor);
 
   // Creamos el objetio si este no es nulo
   if(valor !== null){
     var temp = new Temperatura(valor[1],valor[2],valor[3]);
-  }
-
-  if(temp !== null){
 
     // Pasamos a flotante el valor de la temperatura
     temp.set_valor(parseFloat(temp.get_valor()));
