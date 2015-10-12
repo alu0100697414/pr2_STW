@@ -2,30 +2,10 @@
 
 // Clase Medida
 function Medida (valor, exp, tipo) {
-  var valor_ = valor;
-  var exp_ = exp || 0;
-  var tipo_ = tipo;
-
-  this.get_valor = function() {return valor_;}
-	this.get_exp = function() {return exp_;}
-  this.get_tipo = function() {return tipo_;}
-
-  this.set_valor = function(valor) {valor_ = valor;}
-  this.set_exp = function(exp) {exp_ = exp;}
-  this.set_tipo = function(tipo) {tipo_ = tipo;}
+  this.valor_ = valor;
+  this.exp_ = exp || 0;
+  this.tipo_ = tipo;
 }
-
-// Muestra el resultado
-Medida.prototype.mostrar_final = function(){
-  var res = "El resultado es: " + this.get_valor() + " " + this.get_tipo();
-  resultado.innerHTML = res;
-}
-
-// Muestra el error
-Medida.prototype.mostrar_error = function(error){
-  resultado.innerHTML = "El valor '" + error + "' no es correcto. Lea las instrucciones.";
-}
-
 
 // Clase Temperatura
 function Temperatura (valor, exp, tipo) {
@@ -35,59 +15,94 @@ function Temperatura (valor, exp, tipo) {
 // Indicamos que Temperatura hereda de Medida.
 Temperatura.prototype = new Medida();
 
+
+// Setters y Getters de la clase Medida
+Medida.prototype.get_valor = function(){
+  return this.valor_;
+}
+
+Medida.prototype.get_exp = function(){
+  return this.exp_;
+}
+
+Medida.prototype.get_tipo = function(){
+  return this.tipo_;
+}
+
+Medida.prototype.set_valor = function(valor){
+  this.valor_ = valor;
+}
+
+Medida.prototype.set_exp = function(exp){
+  this.exp_ = exp;
+}
+
+Medida.prototype.set_tipo = function(tipo){
+  this.tipo_ = tipo;
+}
+
+// Calcula el numero correspondiente. Por ejemplo: 3.2e1 -> 32
+Temperatura.prototype.calculo_numero = function(){
+
+  if (this.get_exp() !== undefined){
+    this.set_exp(parseInt(this.get_exp())); // Pasamos el exponente a numero
+
+    // Calculamos el valor correspondiente de la temperatura sin el exponente
+    if (this.get_exp()<0){
+      this.set_exp(this.get_exp()*-1);
+      var i = 1, div = 10;
+
+      while(i < this.get_exp()){
+        div = div * 10;
+        i++; // Vemos por cuanto debemos dividirlo
+      }
+
+      if(div !== 0) {
+        this.set_valor(this.get_valor()/div);
+      }
+
+    } else {
+      var i = 1, div = 10;
+
+      while(i < this.get_exp()){
+        div = div * 10;
+        i++; // Vemos por cuanto debemos multiplicarlo
+      }
+
+      if(div !== 10){
+        this.set_valor(this.get_valor()*div); // Si es distinto de 0 multiplicamos
+      }
+    }
+  }
+}
+
+// Muestra el resultado final
+Temperatura.prototype.mostrar_final = function(){
+  var res = "El resultado es: " + this.get_valor() + " " + this.get_tipo();
+  resultado.innerHTML = res;
+}
+
 function conversor(){
 
   // Cogemos el valor del imput y lo guardamos.
   var ini_temp = document.getElementsByName("ini_temp")[0].value;
 
-  /* Expresion regular que acepta una cadena que empiece por un numero con el signo como manera opcional
-  asi como si este es decimal. Con el primer parentesis recojo el valor de la temperatura y con el segundo
-  el tipo de temperatura que es. */
-  //var exp_regular = /(^[-+]?\d+(?:\.\d*)?)([fFcC])/;
+  // Expresion regular
   var exp_regular_uno = /(^[-+]?\d+(?:\.\d*)?)(?:[eE]?([-+]?\d+))?\s*([fFcC])/;
 
   // Filtramos en la variable con la expresion regular.
   var valor = ini_temp.match(exp_regular_uno);
 
+  // Creamos el objetio si este no es nulo
   if(valor !== null){
     var temp = new Temperatura(valor[1],valor[2],valor[3]);
   }
 
-  if(temp != null){
+  if(temp !== null){
 
     // Pasamos a flotante el valor de la temperatura
     temp.set_valor(parseFloat(temp.get_valor()));
-
-    if (temp.get_exp() !== undefined){
-      temp.set_exp(parseInt(temp.get_exp())); // Pasamos el exponente a numero
-
-      // Calculamos el valor correspondiente de la temperatura sin el exponente
-      if (temp.get_exp()<0){
-        temp.set_exp(temp.get_exp()*-1);
-        var i = 1, div = 10;
-
-        while(i < temp.get_exp()){
-          div = div * 10;
-          i++; // Vemos por cuanto debemos dividirlo
-        }
-
-        if(div !== 0) {
-          temp.set_valor(temp.get_valor()/div);
-        }
-
-      } else {
-        var i = 1, div = 10;
-
-        while(i < temp.get_exp()){
-          div = div * 10;
-          i++; // Vemos por cuanto debemos multiplicarlo
-        }
-
-        if(div !== 10){
-          temp.set_valor(temp.get_valor()*div); // Si es distinto de 0 multiplicamos
-        }
-      }
-    }
+    temp.calculo_numero();
 
     // Hacemos la conversion
     if(temp.get_tipo() === 'c' || temp.get_tipo() === 'C'){
@@ -101,7 +116,6 @@ function conversor(){
     temp_final.mostrar_final(); // Muestra resultado
 
   } else {
-    var error = new Temperatura(-1,-1,-1);
-    error.mostrar_error(ini_temp);  // Muestra error
+    resultado.innerHTML = "El valor '" + ini_temp + "' no es correcto. Lea las instrucciones.";
   }
 }
