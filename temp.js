@@ -76,6 +76,16 @@ Temperatura.prototype.calculo_numero = function(){
   }
 }
 
+// Pasamos C a F
+Temperatura.prototype.to_f = function(){
+  return ((this.get_valor()*9)/5)+32;
+}
+
+// Pasamos C a F
+Temperatura.prototype.to_c = function(){
+  return ((this.get_valor()-32)*5)/9;
+}
+
 // Muestra el resultado final
 Temperatura.prototype.mostrar_final = function(){
   var res = "El resultado es: " + this.get_valor() + " " + this.get_tipo();
@@ -107,10 +117,10 @@ function conversor(){
     // Hacemos la conversion
     if(temp.get_tipo() === 'c' || temp.get_tipo() === 'C'){
       // Pasamos de C a F
-      var temp_final = new Temperatura(((temp.get_valor()*9)/5)+32,0,"F");
+      var temp_final = new Temperatura(temp.to_f(),0,"F");
     } else {
       // Pasamos de F a C
-      var temp_final = new Temperatura(((temp.get_valor()-32)*5)/9,0,"C");
+      var temp_final = new Temperatura(temp.to_c(),0,"C");
     }
 
     temp_final.mostrar_final(); // Muestra resultado
