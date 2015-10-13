@@ -10,5 +10,6 @@ En la rama "master" podrá encontrar todo el contenido de la práctica (ficheros
 - [Web del repositorio de la práctica 1](https://github.com/alu0100697414/pr1_STW/tree/master).
 - [Web del repositorio de la práctica actual](https://github.com/alu0100697414/pr2_STW/tree/master).
 - [Web de la práctica actual](http://alu0100697414.github.io/pr2_STW/).
-- [Web de los test](http://alu0100697414.github.io/pr2_STW/test/index.html).
+- [Web de los test (BDD)](http://alu0100697414.github.io/pr2_STW/test/index.html).
+- [Web del recubrimiento (Blanket)](http://alu0100697414.github.io/pr2_STW/test/test_blanket.html).
 - Contacto: alu0100697414@ull.edu.es
