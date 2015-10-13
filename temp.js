@@ -1,1 +1,83 @@
-"use strict";function Medida(t,e,o){this.valor_=t,this.exp_=e||0,this.tipo_=o}function Temperatura(t,e,o){Medida.call(this,t,e,o)}function conversor(){var t=document.getElementsByName("ini_temp")[0].value,e=/(^[-+]?\d+(?:\.\d*)?)(?:[eE]?([-+]?\d+))?\s*([fFcC])/,o=t.match(e);if(null!==o){var r=new Temperatura(o[1],o[2],o[3]);if(r.set_valor(parseFloat(r.get_valor())),r.calculo_numero(),"c"===r.get_tipo()||"C"===r.get_tipo())var i=new Temperatura(r.to_f(),0,"F");else var i=new Temperatura(r.to_c(),0,"C");i.mostrar_final()}else resultado.innerHTML="El valor '"+t+"' no es correcto. Lea las instrucciones."}Temperatura.prototype=new Medida,Medida.prototype.get_valor=function(){return this.valor_},Medida.prototype.get_exp=function(){return this.exp_},Medida.prototype.get_tipo=function(){return this.tipo_},Medida.prototype.set_valor=function(t){this.valor_=t},Medida.prototype.set_exp=function(t){this.exp_=t},Medida.prototype.set_tipo=function(t){this.tipo_=t},Temperatura.prototype.calculo_numero=function(){if(void 0!==this.get_exp())if(this.set_exp(parseInt(this.get_exp())),this.get_exp()<0){this.set_exp(-1*this.get_exp());for(var t=1,e=10;t<this.get_exp();)e=10*e,t++;0!==e&&this.set_valor(this.get_valor()/e)}else{for(var t=1,e=10;t<this.get_exp();)e=10*e,t++;10!==e&&this.set_valor(this.get_valor()*e)}},Temperatura.prototype.to_f=function(){return 9*this.get_valor()/5+32},Temperatura.prototype.to_c=function(){return 5*(this.get_valor()-32)/9},Temperatura.prototype.mostrar_final=function(){var t="El resultado es: "+this.get_valor()+" "+this.get_tipo();document.getElementById("resultado").innerHTML=t};
+"use strict"; // Sirve para dar mensajes de error y asi encontrarlos antes.
+
+// Clase Medida
+function Medida (valor, tipo) {
+  this.valor_ = valor;
+  this.tipo_ = tipo;
+}
+
+// Clase Temperatura
+function Temperatura (valor, tipo) {
+  Medida.call(this, valor, tipo);
+}
+
+// Indicamos que Temperatura hereda de Medida.
+Temperatura.prototype = new Medida();
+
+
+// Setters y Getters de la clase Medida
+Medida.prototype.get_valor = function(){
+  return this.valor_;
+}
+
+Medida.prototype.get_tipo = function(){
+  return this.tipo_;
+}
+
+Medida.prototype.set_valor = function(valor){
+  this.valor_ = valor;
+}
+
+Medida.prototype.set_tipo = function(tipo){
+  this.tipo_ = tipo;
+}
+
+// Pasamos C a F
+Temperatura.prototype.to_f = function(){
+  return ((this.get_valor()*9)/5)+32;
+}
+
+// Pasamos F a C
+Temperatura.prototype.to_c = function(){
+  return ((this.get_valor()-32)*5)/9;
+}
+
+// Muestra el resultado final
+Temperatura.prototype.mostrar = function(){
+  var res = "El resultado es: " + this.get_valor() + " " + this.get_tipo();
+  document.getElementById("resultado").innerHTML = res;
+}
+
+// Funcion conversor entre las distintas unidades
+function conversor(){
+  var res = new Temperatura();
+  var temp = inicial.value;
+
+  if (temp){
+
+    var exp_regular = /^\s*([-+]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\s*([fFcC])/; var valor = temp.match(exp_regular);
+
+    if (valor){
+
+      var t = new Temperatura();
+
+      t.set_valor(parseFloat(valor[1]));
+      t.set_tipo(valor[2]);
+
+      if (t.get_tipo() == 'c' || t.get_tipo() == 'C'){
+        res.set_valor(t.to_f());
+        res.set_tipo("F");
+      }
+      else{
+        res.set_valor(t.to_c());
+        res.set_tipo("C");
+      }
+      res.mostrar();
+    }
+    else {
+      resultado.innerHTML = "El valor '" + temp + "' no es correcto. Lea las instrucciones.";
+    }
+  }
+  else
+    resultado.innerHTML = "";
+}
