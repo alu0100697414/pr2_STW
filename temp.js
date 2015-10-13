@@ -55,8 +55,7 @@ function conversor(){
 
   if (temp){
 
-    var exp_regular = /^\s*([-+]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\s*([fFcC])/;
-    var valor = temp.match(exp_regular);
+    var exp_regular = /^\s*([-+]?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\s*([fFcC])/; var valor = temp.match(exp_regular);
 
     if (valor){
 
