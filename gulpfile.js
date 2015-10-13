@@ -5,6 +5,7 @@ var gulp    = require('gulp'),
 var del     = require('del');
 var minifyHTML = require('gulp-minify-html');
 var minifyCSS  = require('gulp-minify-css');
+var mocha = require('gulp-mocha');
 
 gulp.task('minify', function () {
   gulp.src('temp.js')
