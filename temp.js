@@ -89,7 +89,7 @@ Temperatura.prototype.to_c = function(){
 // Muestra el resultado final
 Temperatura.prototype.mostrar_final = function(){
   var res = "El resultado es: " + this.get_valor() + " " + this.get_tipo();
-  resultado.innerHTML = res;
+  document.getElementById("resultado").innerHTML = res;
 }
 
 function conversor(){

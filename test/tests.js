@@ -1,6 +1,8 @@
 var expect = chai.expect;
 
-describe("Test para COnverTemp", function() {
+describe("Test para ConverTemp", function() {
+
+  var fin = document.getElementById("resultado");
 
     it("Debería ser: 32e4F", function() {
       var temp = new Temperatura(32,4,"F");
@@ -58,4 +60,28 @@ describe("Test para COnverTemp", function() {
       expect(res).to.equal(0.032000000000000424);
     });
 
+    it("mostrar_final()", function() {
+      window.onload = function() {
+        var temp = new Temperatura(5,0,"F");
+        temp.mostrar_final();
+        expect(fin.innerHTML).to.equal("El resultado es: 5 F");
+      }
+    });
+
+    it("5X === ERROR", function() {
+      window.onload = function() {
+        var temp = new Temperatura(5,0,"X");
+        conversor();
+        expect(fin.innerHTML).to.match("/no es correcto/");
+      }
+    });
+
+    it("32,0576F === 0.032C", function() {
+      window.onload = function() {
+        var temp = new Temperatura(-2.3,0,"C");
+        var res = "El resultado es: " + temp.get_valor() + " " + temp.get_tipo();
+        document.getElementById("resultado").innerHTML = res;
+        expect(fin.innerHTML).to.equal("El resultado es: -2.3 C");
+      }
+    });
 });
