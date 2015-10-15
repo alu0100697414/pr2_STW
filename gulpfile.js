@@ -24,8 +24,3 @@ gulp.task('minify', function () {
 gulp.task('clean', function(cb) {
   del(['minified/*'], cb);
 });
-
-gulp.task("test", function(){
-  gulp.src('')
-    .pipe(open({ uri: 'https://alu0100697414.github.io/pr2_STW/test/'}));
-});
