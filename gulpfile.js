@@ -3,9 +3,9 @@ var gulp    = require('gulp'),
     uglify  = require('gulp-uglify'),
     concat  = require('gulp-concat');
 var del     = require('del');
-var open = require('gulp-open');
 var minifyHTML = require('gulp-minify-html');
 var minifyCSS  = require('gulp-minify-css');
+var mocha = require('gulp-mocha');
 
 gulp.task('minify', function () {
   gulp.src('temp.js')
