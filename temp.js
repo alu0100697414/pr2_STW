@@ -45,7 +45,8 @@ Temperatura.prototype.to_c = function(){
 // Muestra el resultado final
 Temperatura.prototype.mostrar = function(){
   var res = "El resultado es: " + this.get_valor() + " " + this.get_tipo();
-  document.getElementById("resultado").innerHTML = res;
+
+  return res;
 }
 
 // Funcion conversor entre las distintas unidades
@@ -72,7 +73,10 @@ function conversor(){
         res.set_valor(t.to_c());
         res.set_tipo("C");
       }
-      res.mostrar();
+      
+      var m = res.mostrar();
+
+      resultado.innerHTML = m;
     }
     else {
       resultado.innerHTML = "El valor '" + temp + "' no es correcto. Lea las instrucciones.";
