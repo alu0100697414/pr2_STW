@@ -62,16 +62,13 @@ function conversor(){
 
       var t = new Temperatura();
 
-      t.set_valor(parseFloat(valor[1]));
-      t.set_tipo(valor[2]);
+      t.set_valor(parseFloat(valor[1])); t.set_tipo(valor[2]);
 
       if (t.get_tipo() == 'c' || t.get_tipo() == 'C'){
-        res.set_valor(t.to_f());
-        res.set_tipo("F");
+        res.set_valor(t.to_f()); res.set_tipo("F");
       }
       else{
-        res.set_valor(t.to_c());
-        res.set_tipo("C");
+        res.set_valor(t.to_c()); res.set_tipo("C");
       }
 
       var m = res.mostrar();
