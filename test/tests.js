@@ -58,9 +58,9 @@ describe("Test para ConverTemp", function() {
 
     it("NUEVA", function() {
       window.onload = function() {
-        var temp = new Temperatura(5.0,"X");
+        var temp = new Temperatura(5.0,"F");
         conversor();
-        expect(fin.innerHTML).to.match("/no es correcto/");
+        expect(fin.innerHTML).to.equal("El resultado es: -15 C");
       }
     });
 
