@@ -56,6 +56,14 @@ describe("Test para ConverTemp", function() {
       }
     });
 
+    it("NUEVA", function() {
+      window.onload = function() {
+        var temp = new Temperatura(5.0,"X");
+        conversor();
+        expect(fin.innerHTML).to.match("/no es correcto/");
+      }
+    });
+
     it("32,0576F === 0.032C", function() {
       window.onload = function() {
         var temp = new Temperatura(-2.3,0,"C");
